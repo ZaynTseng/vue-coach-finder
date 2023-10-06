@@ -5,7 +5,9 @@ export default {
             ...payload,
         };
 
-        const response = await fetch(`https://vue-coach-finder-5e544-default-rtdb.asia-southeast1.firebasedatabase.app/coaches/${userId}.json`, {
+        const token = context.rootGetters.getToken;
+
+        const response = await fetch(`https://vue-coach-finder-5e544-default-rtdb.asia-southeast1.firebasedatabase.app/coaches/${userId}.json?auth=${token}`, {
             method: "PUT",
             body: JSON.stringify(coachData)
         });

@@ -5,16 +5,38 @@
         <router-link to="/">The Coach Finder</router-link>
       </h1>
       <ul>
-        <router-link to="/coaches">
-          <li>All Coaches</li>
-        </router-link>
-        <router-link to="/requests">
-          <li>Requests</li>
-        </router-link>
+        <li>
+          <router-link to="/coaches">Coaches</router-link>
+        </li>
+        <li v-if="isLoggedIn">
+          <router-link to="/requests">My requests</router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">Login</router-link>
+        </li>
+        <li v-if="isLoggedIn">
+          <router-link to="/auth" @click="logout">Logout</router-link>
+        </li>
       </ul>
     </nav>
   </header>
 </template>
+
+<script>
+export default {
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.getLogInState;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.replace("/auth");
+    }
+  }
+};
+</script>
 
 <style scoped>
 header {

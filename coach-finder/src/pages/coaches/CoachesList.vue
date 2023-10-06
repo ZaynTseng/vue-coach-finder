@@ -12,7 +12,7 @@
       <base-card>
         <div class="controls">
           <base-button mode="outline" @click="fetchCoachData(true)">Refresh</base-button>
-          <base-button link to="/register" v-if="!isCoach && !isLoading">Register</base-button>
+          <base-button link to="/register" v-if="!isCoach && !isLoading && isLoggedIn">Register as a coach</base-button>
         </div>
         <div v-if="isLoading">
           <base-spinner></base-spinner>
@@ -38,7 +38,6 @@ import BaseCard from "@/components/ui/BaseCard.vue";
 import BaseButton from "@/components/ui/BaseButton.vue";
 import CoachFilter from "@/components/coaches/CoachFilter.vue";
 import BaseDialog from "@/components/ui/BaseDialog.vue";
-import {handleError} from "vue";
 
 export default {
   components: {BaseDialog, CoachFilter, BaseButton, BaseCard, CoachItem},
@@ -72,6 +71,9 @@ export default {
     },
     isCoach() {
       return this.$store.getters["coaches/isCoach"];
+    },
+    isLoggedIn() {
+      return this.$store.getters.getLogInState;
     }
   },
   methods: {
